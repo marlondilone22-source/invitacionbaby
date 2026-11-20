@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Baby Shower de la Princesa Maryolet Marie</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Con mucho cariño te invitamos al Baby Shower de nuestra princesa Maryolet Marie. 20 de diciembre de 2026 · 3:00 PM">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_DO">
+<meta property="og:title" content="Baby Shower de la Princesa Maryolet Marie 🧸">
+<meta property="og:description" content="Te invitamos a celebrar con nosotros · 20 de diciembre de 2026 · 3:00 PM">
+<meta property="og:url" content="https://marlondilone22-source.github.io/invitacionbaby/">
+<meta property="og:image" content="https://marlondilone22-source.github.io/invitacionbaby/preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fbd9e0">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600;700&display=swap">
 <style>
 :root{--bg:#fff3f0;--card:#ffffff;--ink:#5a3326;--soft:#8a6556;--rose:#e58ba4;--deep:#b4455f;--gold:#c9a24b;--blush:#fbd9e0;--line:#f1c9d1;
@@ -55,12 +65,21 @@ body{background-image:radial-gradient(var(--line) 2px,transparent 2.4px);backgro
 .strip{font-size:2.2rem;letter-spacing:.3em;margin-top:18px;padding:10px 0 10px .3em;background:var(--blush);border-radius:999px}
 section:nth-of-type(1) h2::after{content:" 🍼"}
 section:nth-of-type(2) h2::after{content:" 🐥"}
-section:nth-of-type(3) h2::after{content:" 🎁"}
-section:nth-of-type(4) h2::after{content:" 💝"}
+section:nth-of-type(3) h2::after{content:" 🎟️"}
+section:nth-of-type(4) h2::after{content:" 🎁"}
+section:nth-of-type(5) h2::after{content:" 💝"}
+[hidden]{display:none!important}
+.pname{font-size:2.6rem;color:var(--rose);line-height:1.1;margin:4px 0 10px;word-break:break-word}
+.pill{display:inline-block;background:var(--blush);color:var(--deep);font-weight:700;border-radius:999px;padding:6px 18px}
+textarea{width:100%;border:2px solid var(--line);border-radius:16px;padding:12px;font:inherit;background:var(--card);color:var(--ink);margin-top:8px}
+.gi{border:2px solid var(--line);border-radius:18px;padding:12px;margin-top:10px;text-align:left}
+.gi small{display:block;color:var(--soft);word-break:break-all}
+.gi .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.gi a.copy{text-decoration:none}
 </style>
 </head>
 <body>
-<main>
+<main id="inv">
 <header class="hero">
 <div class="deco" aria-hidden="true"><span class="a">☁️</span><span class="b">⭐</span><span class="c">🐥</span><span class="d">🐰</span><span class="e">🍼</span><span class="f">🧸</span></div>
 <svg viewBox="0 0 220 230" role="img" aria-label="Osita con corona y corazón">
@@ -102,6 +121,12 @@ section:nth-of-type(4) h2::after{content:" 💝"}
 <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/AZXPxq95WxutkjXbA?g_st=ic">Ver ubicación en el mapa</a>
 </section>
 
+<section id="pase" hidden aria-labelledby="t-pase">
+<h2 id="t-pase">Invitación para</h2>
+<p class="script pname" id="pn"></p>
+<p><span class="pill" id="pp" hidden></span></p>
+</section>
+
 <section aria-labelledby="t-regalos">
 <h2 id="t-regalos">Lista de regalos</h2>
 <p>Si quieres regalarle algo a la princesa, escoge en la lista de Pañales Emma. Es fácil:</p>
@@ -131,6 +156,15 @@ section:nth-of-type(4) h2::after{content:" 💝"}
 <p class="addr">Tu presencia hará aún más especial este día. 💕</p>
 </footer>
 </main>
+<main id="gen" hidden>
+<section>
+<h2>Generador de invitaciones</h2>
+<p class="addr">Escribe un invitado por línea: el nombre, una coma y la cantidad de personas.</p>
+<textarea id="gin" rows="6" placeholder="María Castillo, 2&#10;Familia Pérez, 4&#10;Ana, 1"></textarea>
+<button class="btn" type="button" id="gbtn">Crear links</button>
+<div id="gout"></div>
+</section>
+</main>
 <script>
 var ACCOUNTS=[
 {b:"Banreservas",n:"9608684376",o:"Richard Robles"},
@@ -157,8 +191,8 @@ d.appendChild(t);d.appendChild(bt);box.appendChild(d);
 }
 render(ACCOUNTS,document.getElementById("accs"));
 render(PARENTS,document.getElementById("padres"));
-function copyText(txt,bt){
-function ok(){bt.textContent="¡Copiado!";setTimeout(function(){bt.textContent="Copiar número"},2000)}
+function copyText(txt,bt){var lab=bt.textContent;
+function ok(){bt.textContent="¡Copiado!";setTimeout(function(){bt.textContent=lab},2000)}
 try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(e){fb()}
 function fb(){try{var x=document.createElement("textarea");x.value=txt;document.body.appendChild(x);x.select();document.execCommand("copy");document.body.removeChild(x);ok()}catch(e){bt.textContent="Mantén presionado el número"}}
 }
@@ -170,6 +204,42 @@ var m=Math.floor(ms/60000),d=Math.floor(m/1440),h=Math.floor(m%1440/60),mi=m%60;
 el.innerHTML=[[d,"días"],[h,"horas"],[mi,"min"]].map(function(x){return"<div><b>"+x[0]+"</b><span>"+x[1]+"</span></div>"}).join("");
 }
 tick();setInterval(tick,30000);
+var BASE="https://marlondilone22-source.github.io/invitacionbaby/";
+function tc(s){var sm={de:1,del:1,la:1,las:1,los:1,y:1,e:1};return s.toLowerCase().split(" ").map(function(w,i){return(i>0&&sm[w])?w:w.charAt(0).toUpperCase()+w.slice(1)}).join(" ")}
+(function(){
+var raw=location.search.slice(1).split("&")[0];
+if(!raw)return;
+if(raw.toLowerCase().indexOf("generador")===0){document.getElementById("inv").hidden=true;document.getElementById("gen").hidden=false;document.title="Generador de invitaciones";return}
+var name=raw,n=0,i=raw.lastIndexOf("%");
+if(i>-1&&/^\d{1,2}$/.test(raw.slice(i+1))){name=raw.slice(0,i);n=parseInt(raw.slice(i+1),10)}
+name=name.replace(/\+/g," ");
+try{name=decodeURIComponent(name)}catch(e){name=name.replace(/%20/g," ")}
+name=tc(name.replace(/\s+/g," ").trim()).slice(0,60);
+if(!name)return;
+document.getElementById("pn").textContent=name;
+if(n>0){var pp=document.getElementById("pp");pp.textContent=n+(n===1?" persona":" personas");pp.hidden=false}
+document.getElementById("pase").hidden=false;
+})();
+document.getElementById("gbtn").onclick=function(){
+var out=document.getElementById("gout");out.innerHTML="";
+document.getElementById("gin").value.split("\n").forEach(function(l){
+l=l.trim();if(!l)return;
+var m=l.match(/^(.*?)[\s,;%]+(\d{1,2})$/),nm=l,n=1;
+if(m){nm=m[1];n=parseInt(m[2],10)}
+nm=nm.replace(/^[\s,;%]+|[\s,;%]+$/g,"");if(!nm)return;
+var link=BASE+"?"+encodeURIComponent(nm).replace(/%20/g,"+")+"%"+n;
+var msg="Hola "+nm+" 💕 Con mucho cariño te invitamos al Baby Shower de nuestra princesa Maryolet Marie. 📅 20 de diciembre de 2026 · 🕒 3:00 PM. Aquí está tu invitación: "+link;
+var d=document.createElement("div");d.className="gi";
+var st=document.createElement("strong");st.textContent=nm+" · "+n+(n===1?" persona":" personas");
+var sm=document.createElement("small");sm.textContent=link;
+var row=document.createElement("div");row.className="row";
+var b1=document.createElement("button");b1.className="copy";b1.type="button";b1.textContent="Copiar mensaje";b1.onclick=function(){copyText(msg,b1)};
+var b2=document.createElement("button");b2.className="copy";b2.type="button";b2.textContent="Copiar solo el link";b2.onclick=function(){copyText(link,b2)};
+var a=document.createElement("a");a.className="copy";a.target="_blank";a.rel="noopener";a.href="https://wa.me/?text="+encodeURIComponent(msg);a.textContent="Enviar por WhatsApp";
+row.appendChild(b1);row.appendChild(b2);row.appendChild(a);
+d.appendChild(st);d.appendChild(sm);d.appendChild(row);out.appendChild(d);
+});
+};
 </script>
 </body>
 </html>
